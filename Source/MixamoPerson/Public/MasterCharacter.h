@@ -26,12 +26,21 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 	UCameraComponent* CameraComponent;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Weapon)
+	USceneComponent* NeckSocket;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Weapon)
+	USceneComponent* RightHandSocket;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Weapon)
+	UChildActorComponent* WeaponActor;
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	bool isUseWeapon;
 
 private:
 

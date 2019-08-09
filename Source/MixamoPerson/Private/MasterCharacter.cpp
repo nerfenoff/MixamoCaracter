@@ -12,12 +12,25 @@ AMasterCharacter::AMasterCharacter()
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>("SpringArm");
-	CameraComponent = CreateDefaultSubobject<UCameraComponent>("Camera");
 	SpringArmComponent->SetupAttachment(RootComponent);
-	CameraComponent->SetupAttachment(SpringArmComponent);
-
 	SpringArmComponent->bUsePawnControlRotation = true;
 
+	CameraComponent = CreateDefaultSubobject<UCameraComponent>("Camera");	
+	CameraComponent->SetupAttachment(SpringArmComponent);
+
+	NeckSocket = CreateDefaultSubobject<USceneComponent>("NeckSocket");
+	RightHandSocket = CreateDefaultSubobject<USceneComponent>("RightHandSocket");
+
+	if (USkeletalMeshComponent* SM = GetMesh())
+	{
+		NeckSocket->AttachToComponent(SM, FAttachmentTransformRules::KeepRelativeTransform,TEXT("NeckSocket"));
+		RightHandSocket->AttachToComponent(SM, FAttachmentTransformRules::KeepRelativeTransform, TEXT("RightHandSocket"));
+	}
+	
+	WeaponActor = CreateDefaultSubobject<UChildActorComponent>("WeaponActor");
+	WeaponActor->SetupAttachment(NeckSocket);
+
+	isUseWeapon = false;
 }
 
 // Called when the game starts or when spawned
