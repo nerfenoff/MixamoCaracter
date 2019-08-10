@@ -30,12 +30,15 @@ protected:
 	USceneComponent* NeckSocket;
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Weapon)
 	USceneComponent* RightHandSocket;
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Weapon)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Weapon, meta = (AllowPrivateAccess = "true"))
+	USceneComponent* Weapon;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Weapon, meta = (AllowPrivateAccess = "true"))
 	UChildActorComponent* WeaponActor;
 
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;

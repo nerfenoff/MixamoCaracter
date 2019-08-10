@@ -20,16 +20,22 @@ AMasterCharacter::AMasterCharacter()
 
 	NeckSocket = CreateDefaultSubobject<USceneComponent>("NeckSocket");
 	RightHandSocket = CreateDefaultSubobject<USceneComponent>("RightHandSocket");
-
+	Weapon = CreateDefaultSubobject<USceneComponent>("Weapon");
+	Weapon->bEditableWhenInherited = true;
+	WeaponActor = CreateDefaultSubobject<UChildActorComponent>("WeaponActor");
+	WeaponActor->bEditableWhenInherited = true;
 	if (USkeletalMeshComponent* SM = GetMesh())
 	{
 		NeckSocket->AttachToComponent(SM, FAttachmentTransformRules::KeepRelativeTransform,TEXT("NeckSocket"));
 		RightHandSocket->AttachToComponent(SM, FAttachmentTransformRules::KeepRelativeTransform, TEXT("RightHandSocket"));
+		Weapon->AttachToComponent(NeckSocket, FAttachmentTransformRules::KeepRelativeTransform);
+		WeaponActor->AttachToComponent(Weapon, FAttachmentTransformRules::KeepRelativeTransform);
+
 	}
 	
-	WeaponActor = CreateDefaultSubobject<UChildActorComponent>("WeaponActor");
-	WeaponActor->SetupAttachment(NeckSocket);
 
+
+	Weapon->SetRelativeLocationAndRotation(FVector::ZeroVector, FQuat::FQuat());
 	isUseWeapon = false;
 }
 
